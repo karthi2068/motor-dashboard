@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>EdgePulse – AI Powered Machine Health Monitor</title>
+
+<style>
+
+body{
+font-family: Arial;
+background: linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+color:white;
+text-align:center;
+margin:0;
+padding:0;
+}
+
+.header{
+display:flex;
+justify-content:center;
+align-items:center;
+gap:20px;
+padding:15px;
+}
+
+h1{
+font-size:40px;
+margin:10px;
+}
+
+.subtitle{
+font-size:18px;
+opacity:0.8;
+}
+
+.container{
+display:flex;
+justify-content:center;
+gap:30px;
+flex-wrap:wrap;
+margin-top:40px;
+}
+
+.card{
+width:220px;
+padding:25px;
+border-radius:15px;
+box-shadow:0 0 15px rgba(0,0,0,0.4);
+transition:0.3s;
+}
+
+.card:hover{
+transform:scale(1.08);
+}
+
+.temp{
+background:linear-gradient(45deg,#ff512f,#dd2476);
+}
+
+.vib{
+background:linear-gradient(45deg,#36d1dc,#5b86e5);
+}
+
+.curr{
+background:linear-gradient(45deg,#11998e,#38ef7d);
+}
+
+.value{
+font-size:45px;
+margin-top:15px;
+font-weight:bold;
+}
+
+.label{
+font-size:20px;
+}
+
+.footer{
+margin-top:60px;
+font-size:15px;
+opacity:0.8;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="header">
+<h1>EdgePulse</h1>
+</div>
+
+<div class="subtitle">
+AI Powered Machine Health Monitoring Dashboard
+</div>
+
+<div class="container">
+
+<div class="card temp">
+<div class="label">🌡 Temperature</div>
+<div class="value" id="temp">--</div>
+</div>
+
+<div class="card vib">
+<div class="label">📳 Vibration</div>
+<div class="value" id="vib">--</div>
+</div>
+
+<div class="card curr">
+<div class="label">⚡ Current</div>
+<div class="value" id="curr">--</div>
+</div>
+
+</div>
+
+<div class="footer">
+Edge AI based Predictive Maintenance System
+</div>
+
+<script>
+
+const token="3IkC4ShnhzXSu4xU2RDg5dPSnsNEZiWL";
+
+function updateData(){
+
+fetch(`https://blynk.cloud/external/api/get?token=${token}&V0`)
+.then(res=>res.text())
+.then(data=>{
+document.getElementById("temp").innerHTML=data+" °C";
+});
+
+fetch(`https://blynk.cloud/external/api/get?token=${token}&V1`)
+.then(res=>res.text())
+.then(data=>{
+document.getElementById("vib").innerHTML=data;
+});
+
+fetch(`https://blynk.cloud/external/api/get?token=${token}&V2`)
+.then(res=>res.text())
+.then(data=>{
+document.getElementById("curr").innerHTML=data+" A";
+});
+
+}
+
+setInterval(updateData,2000);
+
+</script>
+
+</body>
+</html>
